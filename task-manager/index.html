@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=ù, initial-scale=1.0">
+    <title>Task Manager</title>
+</head>
+<body>
+    <div>
+        <h1>Task Manager</h1>
+        <div>
+          <input type="text" id="task-input" placeholder="Inserisci un'attività...">
+          <button id="add-task-btn">Aggiungi</button>
+        </div>
+        <div>
+          <input type="text" id="search-input" placeholder="Cerca attività...">
+        </div>
+        <div>
+          <label for="filter-select">Filtra per stato:</label>
+          <select id="filter-select">
+            <option value="tutte">Tutte</option>
+            <option value="todo">Da fare</option>
+            <option value="inprogress">In corso</option>
+            <option value="done">Completata</option>
+          </select>
+        </div>
+        <ul id="task-list"></ul>
+      </div>
+      <script src="script.js"></script>
+</body>
+</html>
