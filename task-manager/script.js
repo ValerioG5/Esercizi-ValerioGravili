@@ -7,21 +7,39 @@ const taskList = document.getElementById("task-list");
 let tasks = [];
 
 function renderTask(task) {
-  const li = document.createElement("li");
-  li.textContent = task.name;
+    const li = document.createElement("li");
 
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = task.name;
+  
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "elimina";
-  deleteBtn.classList.add("delete-btn");
-  deleteBtn.addEventListener("click", () => {
-    removeTask(task.id);
-  });
+    const statusSelect = document.createElement("select");
+    statusSelect.innerHTML = `
+      <option value="todo" ${task.status === "todo" ? "selected" : ""}>Da fare</option>
+      <option value="inprogress" ${task.status === "inprogress" ? "selected" : ""}>In corso</option>
+      <option value="done" ${task.status === "done" ? "selected" : ""}>Completata</option>
+    `;
+  
+    statusSelect.addEventListener("change", () => {
+      task.status = statusSelect.value;
+      updateTaskList();
+    });
+  
 
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
-}
-
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener("click", () => {
+      removeTask(task.id);
+    });
+  
+  
+    li.appendChild(nameSpan);
+    li.appendChild(statusSelect);
+    li.appendChild(deleteBtn);
+  
+    taskList.appendChild(li);
+  }
 function addTask() {
   const taskName = taskInput.value.trim();
   if (taskName === ""){return}
