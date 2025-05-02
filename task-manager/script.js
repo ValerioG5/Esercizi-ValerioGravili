@@ -2,7 +2,7 @@
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const taskList = document.getElementById("task-list");
-
+const filterSelect = document.getElementById("filter-select");
 
 let tasks = [];
 
@@ -62,8 +62,16 @@ function removeTask(id) {
 
 
 function updateTaskList() {
-  taskList.innerHTML = "";       
-  tasks.forEach(renderTask);      
-}
+    taskList.innerHTML = "";
+  
+    const filtro = filterSelect.value; // può essere 'all', 'todo', 'inprogress', 'done'
+  
+    const tasksFiltrate = filtro === "all"
+      ? tasks
+      : tasks.filter(task => task.status === filtro);
+  
+    tasksFiltrate.forEach(renderTask);
+  }
 
 addTaskBtn.addEventListener("click", addTask); //aggiungo qui l evento on click
+filterSelect.addEventListener("change", updateTaskList);
