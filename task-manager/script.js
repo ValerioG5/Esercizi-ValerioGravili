@@ -19,11 +19,12 @@ function renderTask(task) {
     input.value = task.name;
     li.replaceChild(input, nameSpan);
 
-   
     const salvaModifica = () => {
-      task.name = input.value.trim() || task.name; // Evita che rimanga vuoto trim per rimuovere spazi
+      task.name = input.value.trim() || task.name;// Evita che rimanga vuoto trim per rimuovere spazi
       updateTaskList();
+      showMessage("Attività modificata con successo!");
     };
+    
 
     input.addEventListener("blur", salvaModifica);  
     input.addEventListener("keypress", (e) => {
@@ -61,6 +62,17 @@ function renderTask(task) {
 
   taskList.appendChild(li);
 }
+
+function showMessage(text, duration = 2000) {
+  const messageDiv = document.getElementById("message");
+  messageDiv.textContent = text;
+  messageDiv.style.display = "block";
+
+  setTimeout(() => {
+    messageDiv.style.display = "none";
+  }, duration);
+}
+
 
 function addTask() {
   const taskName = taskInput.value.trim();
