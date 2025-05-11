@@ -7,39 +7,61 @@ const searchInput = document.getElementById("search-input");
 let tasks = [];
 
 function renderTask(task) {
-    const li = document.createElement("li");
+  const li = document.createElement("li");
 
-    const nameSpan = document.createElement("span");
-    nameSpan.textContent = task.name;
-  
+  // Nome dell'attività (modificabile al click)
+  const nameSpan = document.createElement("span");
+  nameSpan.textContent = task.name;
 
-    const statusSelect = document.createElement("select");
-    statusSelect.innerHTML = `
-      <option value="todo" ${task.status === "todo" ? "selected" : ""}>Da fare</option>
-      <option value="inprogress" ${task.status === "inprogress" ? "selected" : ""}>In corso</option>
-      <option value="done" ${task.status === "done" ? "selected" : ""}>Completata</option>
-    `;
-  
-    statusSelect.addEventListener("change", () => {
-      task.status = statusSelect.value;
+  nameSpan.addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = task.name;
+    li.replaceChild(input, nameSpan);
+
+   
+    const salvaModifica = () => {
+      task.name = input.value.trim() || task.name; // Evita che rimanga vuoto trim per rimuovere spazi
       updateTaskList();
-    });
-  
+    };
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.addEventListener("click", () => {
-      removeTask(task.id);
+    input.addEventListener("blur", salvaModifica);  
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") salvaModifica();      
     });
-  
-  
-    li.appendChild(nameSpan);
-    li.appendChild(statusSelect);
-    li.appendChild(deleteBtn);
-  
-    taskList.appendChild(li);
-  }
+
+    input.focus();
+  });
+
+  // Select per lo stato
+  const statusSelect = document.createElement("select");
+  statusSelect.innerHTML = `
+    <option value="todo" ${task.status === "todo" ? "selected" : ""}>Da fare</option>
+    <option value="inprogress" ${task.status === "inprogress" ? "selected" : ""}>In corso</option>
+    <option value="done" ${task.status === "done" ? "selected" : ""}>Completata</option>
+  `;
+
+  statusSelect.addEventListener("change", () => {
+    task.status = statusSelect.value;
+    updateTaskList();
+  });
+
+  // Bottone elimina
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "x";
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.addEventListener("click", () => {
+    removeTask(task.id);
+  });
+
+  // Aggiungi tutto alla lista  <li> grazie all'appendChild
+  li.appendChild(nameSpan);
+  li.appendChild(statusSelect);
+  li.appendChild(deleteBtn);
+
+  taskList.appendChild(li);
+}
+
 function addTask() {
   const taskName = taskInput.value.trim();
   if (taskName === ""){return}
