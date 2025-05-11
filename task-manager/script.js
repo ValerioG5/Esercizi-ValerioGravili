@@ -3,7 +3,7 @@ const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const taskList = document.getElementById("task-list");
 const filterSelect = document.getElementById("filter-select");
-
+const searchInput = document.getElementById("search-input");
 let tasks = [];
 
 function renderTask(task) {
@@ -27,7 +27,7 @@ function renderTask(task) {
   
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "🗑️";
+    deleteBtn.textContent = "x";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.addEventListener("click", () => {
       removeTask(task.id);
@@ -64,14 +64,19 @@ function removeTask(id) {
 function updateTaskList() {
     taskList.innerHTML = "";
   
-    const filtro = filterSelect.value; // può essere 'all', 'todo', 'inprogress', 'done'
+    const filtro = filterSelect.value;
+    const searchTerm = searchInput.value.toLowerCase();
   
-    const tasksFiltrate = filtro === "all"
-      ? tasks
-      : tasks.filter(task => task.status === filtro);
+    const tasksFiltrate = tasks.filter(task => {
+      const statoOk = filtro === "all" || task.status === filtro;
+      const nomeOk = task.name.toLowerCase().includes(searchTerm);
+      return statoOk && nomeOk;
+    });
   
     tasksFiltrate.forEach(renderTask);
   }
+  
 
 addTaskBtn.addEventListener("click", addTask); //aggiungo qui l evento on click
 filterSelect.addEventListener("change", updateTaskList);
+searchInput.addEventListener("input", updateTaskList);
