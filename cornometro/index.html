@@ -7,17 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="stopwatch-container">
-        <h1>Cronometro</h1>
-        <div id="display">00:00:00</div>
+    <div class="container">
+        <h1>Cronometro Digitale</h1>
+        <div id="display" class="display">00:00:00</div>
+        
         <div class="buttons">
             <button id="start-btn">Start</button>
             <button id="stop-btn">Stop</button>
             <button id="reset-btn">Reset</button>
             <button id="lap-btn">Giro</button>
         </div>
-        <ul id="laps-list"></ul>
+
+        <ul id="laps-list" class="laps-list"></ul>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
