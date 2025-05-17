@@ -59,14 +59,12 @@ resetBtn.addEventListener("click", () => {
     seconds = 0;
     minutes = 0;
     updateDisplay();
-    lapsList.innerHTML = ""; // Svuota la lista dei giri
 });
 
 // Pulsante Giro
 lapBtn.addEventListener("click", () => {
-    if (running) {
+
         const lapTime = document.createElement("li");
         lapTime.textContent = display.textContent;
         lapsList.appendChild(lapTime);
-    }
 });

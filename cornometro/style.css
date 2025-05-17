@@ -1,0 +1,92 @@
+/* Stili generali */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #2a2135;
+}
+
+.container {
+    text-align: center;
+    background-color: #3b2b4c;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #d6b3ff;
+}
+
+/* Display del cronometro */
+.display {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #e0c3fc;
+    font-weight: bold;
+    background-color: #4c3b61;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #a66cff;
+}
+
+/* Bottoni */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: white;
+}
+
+#start-btn {
+    background-color: #a66cff;
+}
+
+#stop-btn {
+    background-color: #d66eff;
+}
+
+#reset-btn {
+    background-color: #8f4b87;
+}
+
+#lap-btn {
+    background-color: #684a75;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Lista dei giri */
+.laps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid #a66cff;
+}
+
+.laps-list li {
+    background-color: #4c3b61;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 8px;
+    color: #d6b3ff;
+    border: 1px solid #684a75;
+}
