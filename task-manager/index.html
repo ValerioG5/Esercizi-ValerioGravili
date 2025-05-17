@@ -2,31 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=ù, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <h1>Task Manager</h1>
-        <div>
-          <input type="text" id="task-input" placeholder="Inserisci un'attività...">
-          <button id="add-task-btn">Aggiungi</button>
+    <div class="container">
+        <!-- Header con il titolo -->
+        <header>
+            <h1>Task Manager</h1>
+        </header>
+
+        <!-- Sezione di input per l'aggiunta delle task -->
+        <div class="input-group">
+            <input type="text" id="task-input" placeholder="Inserisci un'attività...">
+            <button id="add-task-btn">Aggiungi</button>
         </div>
-        <div>
-          <input type="text" id="search-input" placeholder="Cerca attività...">
+
+        <!-- Barra di ricerca e filtro -->
+        <div class="filter-group">
+            <div class="search-group">
+                <input type="text" id="search-input" placeholder="Cerca attività...">
+                <button id="search-btn">Cerca</button>
+            </div>
+            <div class="select-group">
+                <label for="filter-select">Filtra per stato:</label>
+                <select id="filter-select">
+                    <option value="all">Tutte</option>
+                    <option value="todo">Da fare</option>
+                    <option value="inprogress">In corso</option>
+                    <option value="done">Completata</option>
+                </select>
+            </div>
         </div>
-        <div>
-          <label for="filter-select">Filtra per stato:</label>
-          <select id="filter-select">
-            <option value="all">Tutte</option>
-            <option value="todo">Da fare</option>
-            <option value="inprogress">In corso</option>
-            <option value="done">Completata</option>
-          </select>
+
+        <!-- Colonne delle task -->
+        <div class="task-columns">
+            <div class="task-column" id="todo">
+                <h2>Da fare</h2>
+                <ul class="task-list"></ul>
+            </div>
+
+            <div class="task-column" id="inprogress">
+                <h2>In corso</h2>
+                <ul class="task-list"></ul>
+            </div>
+
+            <div class="task-column" id="done">
+                <h2>Completata</h2>
+                <ul class="task-list"></ul>
+            </div>
         </div>
-        <ul id="task-list"></ul>
-        <div id="message" style="display: none; color: green; margin-top: 10px;"></div>
-      </div>
-      <script src="script.js"></script>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
