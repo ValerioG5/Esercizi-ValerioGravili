@@ -1,21 +1,43 @@
-//costanti per gli elementi del DOM
+/**
+ * Riferimenti agli elementi del DOM utilizzati nell'applicazione.
+ * @const {HTMLInputElement} taskInput - Campo input per inserire nuove attività.
+ * @const {HTMLButtonElement} addTaskBtn - Bottone per aggiungere una nuova attività.
+ * @const {HTMLSelectElement} filterSelect - Menu a tendina per filtrare le attività per stato.
+ * @const {HTMLInputElement} searchInput - Campo input per cercare attività per nome.
+ * @const {HTMLButtonElement} searchBtn - Bottone per eseguire la ricerca.
+ */
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const filterSelect = document.getElementById("filter-select");
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
-searchBtn.addEventListener("click", () => {
-  updateColumns();
-});
+
+/**
+ * Oggetto contenente le colonne delle attività divise per stato.
+ * @const {Object<string, HTMLElement>} columns - Colonne "todo", "inprogress", "done".
+ */
 const columns = {
   todo: document.querySelector("#todo"),
   inprogress: document.querySelector("#inprogress"),
   done: document.querySelector("#done")
 };
 
+/**
+ * Array che contiene tutte le attività.
+ * @type {Array<{id: string, name: string, status: string}>}
+ */
 let tasks = [];
 
-// Crea un elemento per la task
+// Event listener per il pulsante di ricerca
+searchBtn.addEventListener("click", () => {
+  updateColumns();
+});
+
+/**
+ * Crea un elemento DOM per una task.
+ * @param {{id: string, name: string, status: string}} task - L'oggetto attività.
+ * @returns {HTMLLIElement} - L'elemento della lista DOM creato.
+ */
 function createTaskElement(task) {
   const li = document.createElement("li");
   const nameSpan = document.createElement("span");
@@ -25,7 +47,7 @@ function createTaskElement(task) {
   deleteBtn.textContent = "x";
   deleteBtn.addEventListener("click", () => removeTask(task.id));
 
-  //Modifica del nome con doppio click
+  // Modifica del nome con doppio click
   nameSpan.addEventListener("dblclick", () => {
     const input = document.createElement("input");
     input.type = "text";
@@ -58,7 +80,10 @@ function createTaskElement(task) {
   return li;
 }
 
-// Aggiunge una nuova task
+/**
+ * Aggiunge una nuova attività alla lista.
+ * Recupera il valore dell'input, crea un nuovo oggetto task e aggiorna le colonne.
+ */
 function addTask() {
   const taskName = taskInput.value.trim();
   if (!taskName) return;
@@ -75,22 +100,26 @@ function addTask() {
   updateColumns();
 }
 
-// Rimuove una task
+/**
+ * Rimuove un'attività dall'elenco.
+ * @param {string} id - ID della task da rimuovere.
+ */
 function removeTask(id) {
   tasks = tasks.filter(task => task.id !== id);
   updateColumns();
 }
 
-// Aggiorna le colonne
+/**
+ * Aggiorna la visualizzazione delle colonne task in base al filtro selezionato e alla ricerca.
+ * Svuota le colonne, applica i filtri e ripopola le attività.
+ */
 function updateColumns() {
   Object.values(columns).forEach(column => column.querySelector(".task-list").innerHTML = "");
 
-  // Prendo i valori del filtro e della ricerca
   const filtro = filterSelect.value;
   const searchTerm = searchInput.value.trim().toLowerCase();
 
   tasks.forEach(task => {
-    // Filtro per stato e per contenuto
     if (
       (filtro === "all" || task.status === filtro) &&
       (searchTerm === "" || task.name.toLowerCase().includes(searchTerm))
@@ -100,13 +129,15 @@ function updateColumns() {
     }
   });
 
-  // Visualizzazione delle colonne in base al filtro
   Object.keys(columns).forEach(key => {
     columns[key].style.display = (filtro === "all" || filtro === key) ? "block" : "none";
   });
 }
 
-// Drag and Drop
+/**
+ * Inizializza il drag and drop per ogni colonna delle attività.
+ * Aggiorna lo stato della task al rilascio.
+ */
 Object.keys(columns).forEach(status => {
   const column = columns[status];
 
@@ -124,6 +155,6 @@ Object.keys(columns).forEach(status => {
   });
 });
 
-// Event Listener
+// Event listeners per interazioni dell'utente
 addTaskBtn.addEventListener("click", addTask);
 filterSelect.addEventListener("change", updateColumns);
