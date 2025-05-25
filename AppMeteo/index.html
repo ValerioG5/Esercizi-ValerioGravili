@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Meteo App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Meteo App</h1>
+        <h1 class="title">Meteo App</h1>
 
         <div class="input-group">
-            <input type="text" id="latitude" placeholder="Latitudine">
-            <input type="text" id="longitude" placeholder="Longitudine">
-            <button id="search-btn">Cerca</button>
+            <input type="text" id="latitude" class="input-field" placeholder="Inserisci la latitudine">
+            <input type="text" id="longitude" class="input-field" placeholder="Inserisci la longitudine">
+            <button id="search-btn" class="btn">Cerca</button>
+            <button id="local-btn"> Usa la mia posizione</button>
         </div>
 
         <div class="weather-info" id="weather-info">
-        
+          
         </div>
+
+        <div id="loader" class="loader hidden"></div>
     </div>
 
-    <script src="script.js"></script>
+   
 </body>
+<script src="script.js"></script>
 </html>
