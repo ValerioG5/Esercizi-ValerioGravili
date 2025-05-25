@@ -1,13 +1,44 @@
+/**
+ * Avvia lo script una volta che il DOM è completamente carico.
+ * @event DOMContentLoaded
+ */
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // Selezione degli elementi dal DOM
+    /**
+     * Bottone per cercare il meteo con latitudine e longitudine.
+     * @type {HTMLButtonElement}
+     */
     const searchBtn = document.getElementById("search-btn");
+
+    /**
+     * Campo input per la latitudine.
+     * @type {HTMLInputElement}
+     */
     const latitudeInput = document.getElementById("latitude");
+
+    /**
+     * Campo input per la longitudine.
+     * @type {HTMLInputElement}
+     */
     const longitudeInput = document.getElementById("longitude");
+
+    /**
+     * Contenitore in cui vengono visualizzate le informazioni meteo.
+     * @type {HTMLDivElement}
+     */
     const weatherInfo = document.getElementById("weather-info");
+
+    /**
+     * Bottone per ottenere la posizione geografica dell’utente.
+     * @type {HTMLButtonElement}
+     */
     const localBtn = document.getElementById("local-btn");
 
-    // Funzione per ottenere una descrizione del meteo in base al codice
+    /**
+     * Restituisce una descrizione testuale e un'emoji del meteo in base al codice fornito.
+     *
+     * @param {number} code - Il codice meteo secondo la specifica di Open-Meteo.
+     * @returns {string} La descrizione del meteo con emoji.
+     */
     function getWeatherDescription(code) {
         if (code === 0) return "☀️ Sereno";
         if (code >= 1 && code <= 3) return "🌤️ Parzialmente nuvoloso";
@@ -19,10 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Non disponibile";
     }
 
-    // Evento per il bottone "Cerca"
+    /**
+     * Evento click sul bottone di ricerca.
+     * Recupera e visualizza le condizioni meteo attuali in base a latitudine e longitudine inserite.
+     *
+     * @async
+     * @function
+     */
     searchBtn.addEventListener("click", async () => {
-
-
         const latitude = latitudeInput.value.trim();
         const longitude = longitudeInput.value.trim();
 
@@ -32,23 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-       
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
-            
+
             if (!response.ok) {
                 throw new Error("Errore nel recupero dei dati meteo.");
             }
 
-         
             const data = await response.json();
-
-
             const { temperature, windspeed, winddirection, weathercode } = data.current_weather;
 
-            // Pulizia del contenuto precedente
+            // Svuota il contenuto precedente
             weatherInfo.innerHTML = "";
 
-            // Creazione e inserimento dei nuovi elementi
+            // Crea e mostra i nuovi dati
             const tempElement = document.createElement("p");
             tempElement.textContent = `Temperatura: ${temperature}°C`;
 
@@ -72,17 +103,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Evento per il bottone "Posizione Locale"
+    /**
+     * Evento click sul bottone "Posizione Locale".
+     * Usa la geolocalizzazione per riempire i campi di latitudine e longitudine e avvia la ricerca.
+     */
     localBtn.addEventListener("click", () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
+                /**
+                 * Callback per posizione ottenuta con successo.
+                 * @param {GeolocationPosition} position - Posizione restituita dall'API di geolocalizzazione.
+                 */
                 (position) => {
                     const lat = position.coords.latitude.toFixed(4);
                     const lon = position.coords.longitude.toFixed(4);
                     latitudeInput.value = lat;
                     longitudeInput.value = lon;
-                    searchBtn.click(); // Simulazione click per recuperare i dati
+                    searchBtn.click(); // Avvia la ricerca meteo
                 },
+                /**
+                 * Callback in caso di errore nella geolocalizzazione.
+                 * @param {GeolocationPositionError} error - Oggetto errore.
+                 */
                 (error) => {
                     alert("Errore nel recupero della posizione.");
                     console.error(error);
